@@ -1,0 +1,19 @@
+{
+  "data": [
+    {
+      "orderID": "SWC527",
+      "orderStdID": 12345,
+      "orderName": "3xbun",
+      "orderTime": "Jul 28 - 19:50",
+      "orders": [
+        {
+          "itemName": "item #2",
+          "itemImg": "https://placehold.co/600x400",
+          "amt": 2,
+          "itemPrice": 1
+        }
+      ],
+      "id": "1O14CmQ"
+    }
+  ]
+}

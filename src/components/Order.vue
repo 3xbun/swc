@@ -1,105 +1,149 @@
 <template>
-  <div class="container" id="home" v-if="page == 'home'">
-    <h1>Welcome to Order</h1>
-    <div class="btn" @click="page = 'order'">สั่งซื้อ</div>
-  </div>
-
-  <div class="container" id="order" v-if="page == 'order'">
-    <h1>ข้อมูลผู้ซื้อ <i class="fa-solid fa-user"></i></h1>
+  <div class="container" id="admin" v-if="orderInformation.orderName == 'seawalkclub'">
+    <h1>Dashboard</h1>
 
     <div class="contents">
-      <form>
-        <label for="fullName">ชื่อ - นามสกุล</label>
-        <input type="text" id="fullName" v-model="orderInformation.orderName">
-        <label for="fullName">เลขประจำตัว</label>
-        <input type="text" id="fullName" v-model="orderInformation.orderStdID">
-      </form>
+      <input type="text" placeholder="Enter Order ID">
 
-      <div class="btn" @click="page = 'cart'">
-        ต่อไป
-      </div>
-    </div>
-  </div>
-
-  <div class="container" id="cart" v-if="page == 'cart'">
-    <h1>
-      <i class="fa-solid fa-circle-chevron-left" @click="page = 'order'"></i>
-      <p>รถเข็น</p>
-      <i class="fa-solid fa-cart-shopping"></i>
-    </h1>
-
-    <div class="contents">
       <table>
-        <tr v-for="item in items">
-          <td><img :src="item.itemImg"></td>
-          <td class="itemName">{{ item.itemName }}</td>
-          <td>
-            <i class="fa-solid fa-minus" @click="cart(item, false)"></i>
-          </td>
-          <td>{{ item.amt }}</td>
-          <td>
-            <i class="fa-solid fa-plus" @click="cart(item, true)"></i>
-          </td>
-          <td>{{ item.amt * item.itemPrice }}</td>
-        </tr>
-      </table>
-      <p class="total">รวมราคา: {{ total }} บาท</p>
+        <thead>
+          <td>Order #</td>
+          <td>Std ID</td>
+          <td>Name</td>
 
-      <div class="btn" @click="page = 'summary'">
-        ต่อไป
-      </div>
-    </div>
-  </div>
-
-  <div class="container" id="summary" v-if="page == 'summary'">
-    <h1>
-      <i class="fa-solid fa-circle-chevron-left" @click="page = 'cart'"></i>
-      <p>สรุปคำสั่งซื้อ</p>
-      <i class="fa-solid fa-list-check"></i>
-    </h1>
-
-    <div class="contents">
-      <table>
-        <div v-for="item in items">
-          <tr v-if="item.amt">
-            <td>
-              <img :src="item.itemImg">
-            </td>
-            <td>
-              {{ item.itemName }}
-            </td>
-            <td>
-              x{{ item.amt }}
-            </td>
-            <td>
-              {{ item.amt * item.itemPrice }}.-
-            </td>
+        </thead>
+        <tbody>
+          <tr v-for="o in Orders.data">
+            <td>{{ o.orderID }}</td>
+            <td>{{ o.orderStdID }}</td>
+            <td>{{ o.orderName }}</td>
           </tr>
-        </div>
+        </tbody>
       </table>
-      <p class="total">รวมราคา: {{ total }} บาท</p>
-
-      <div class="btn" @click="page = 'success'; order()">
-        สั่งจอง
-      </div>
     </div>
   </div>
 
-  <div class="container" id="success" v-if="page == 'success'">
-    <h1>
-      <i class="fa-solid fa-circle-check"></i>
-      <p>
-        การสั่งจองสำเร็จ
-      </p>
-      <p class="id">Order <span>#{{ orderInformation.orderID }}</span></p>
-      <p class="date">{{ orderInformation.orderTime }}</p>
-    </h1>
+  <div v-else>
+    <div class="container" id="home" v-if="page == 'home'">
+      <h1>Welcome to Order</h1>
+      <div class="btn" @click="page = 'order'">สั่งซื้อ</div>
+    </div>
 
-    <div class="contents">
-      <div class="summary">
-        <li v-for="o in orderInformation.orders">
-          {{ o.itemName }} - {{ o.amt }}
-        </li>
+    <div class="container" id="order" v-if="page == 'order'">
+      <h1>ข้อมูลผู้ซื้อ <i class="fa-solid fa-user"></i></h1>
+
+      <div class="contents">
+        <form @click="error = ''">
+          <label for="fullName">ชื่อ - นามสกุล</label>
+          <input type="text" id="fullName" v-model="orderInformation.orderName">
+          <label for="fullName">เลขประจำตัว</label>
+          <input type="number" id="fullName" v-model="orderInformation.orderStdID">
+        </form>
+
+        <div class="error">
+          {{ error }}
+        </div>
+
+        <div class="btn" @click="formValidation()">
+          ต่อไป
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="cart" v-if="page == 'cart'">
+      <h1>
+        <i class="fa-solid fa-circle-chevron-left" @click="page = 'order'"></i>
+        <p>รถเข็น</p>
+        <i class="fa-solid fa-cart-shopping"></i>
+      </h1>
+
+      <div class="contents">
+        <table>
+          <tr v-for="item in items">
+            <td><img :src="item.itemImg"></td>
+            <td class="itemName">{{ item.itemName }}</td>
+            <td>
+              <i class="fa-solid fa-minus" @click="cart(item, false)"></i>
+            </td>
+            <td>{{ item.amt }}</td>
+            <td>
+              <i class="fa-solid fa-plus" @click="cart(item, true)"></i>
+            </td>
+            <td>{{ item.amt * item.itemPrice }}</td>
+          </tr>
+        </table>
+        <p class="total">รวมราคา: {{ total }} บาท</p>
+
+        <div class="btn" @click="page = 'summary'">
+          ต่อไป
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="summary" v-if="page == 'summary'">
+      <h1>
+        <i class="fa-solid fa-circle-chevron-left" @click="page = 'cart'"></i>
+        <p>สรุปคำสั่งซื้อ</p>
+        <i class="fa-solid fa-list-check"></i>
+      </h1>
+
+      <div class="contents">
+        <table>
+          <div v-for="item in items">
+            <tr v-if="item.amt">
+              <td>
+                <img :src="item.itemImg">
+              </td>
+              <td>
+                {{ item.itemName }}
+              </td>
+              <td>
+                x{{ item.amt }}
+              </td>
+              <td>
+                {{ item.amt * item.itemPrice }}.-
+              </td>
+            </tr>
+          </div>
+        </table>
+        <p class="total">รวมราคา: {{ total }} บาท</p>
+
+        <div class="btn" @click="page = 'success'; order()">
+          สั่งจอง
+        </div>
+      </div>
+    </div>
+
+    <div class="container" id="success" v-if="page == 'success'">
+      <h1>
+        <i class="fa-solid fa-circle-check"></i>
+        <p>
+          การสั่งจองสำเร็จ
+        </p>
+        <p class="id">Order <span>#{{ orderInformation.orderID }}</span></p>
+        <p class="date">{{ orderInformation.orderTime }}</p>
+      </h1>
+
+      <div class="contents">
+        <table>
+          <div v-for="item in items">
+            <tr v-if="item.amt">
+              <td>
+                <img :src="item.itemImg">
+              </td>
+              <td>
+                {{ item.itemName }}
+              </td>
+              <td>
+                x{{ item.amt }}
+              </td>
+              <td>
+                {{ item.amt * item.itemPrice }}.-
+              </td>
+            </tr>
+          </div>
+        </table>
+        <p class="total">รวมราคา: {{ total }} บาท</p>
       </div>
     </div>
   </div>
@@ -107,9 +151,16 @@
 
 <script setup>
 import dayjs from 'dayjs';
+import axios from 'axios';
 import { computed, ref } from 'vue';
 
+import Orders from '../database/Orders.json';
+
+console.log(typeof Orders.data);
+console.log(Orders.data);
+
 const page = ref('home');
+const error = ref('');
 
 const total = computed(() => {
   let t = 0
@@ -175,6 +226,21 @@ const order = () => {
       orderInformation.value.orders.push(i)
     }
   });
+
+  const payload = orderInformation.value
+
+  axios.post("http://localhost:3001/Orders", payload)
+  console.log(payload);
+
+}
+
+const formValidation = () => {
+  const o = orderInformation.value
+  if (o.orderName && o.orderStdID) {
+    page.value = 'cart'
+  } else {
+    error.value = "กรุณากรอกข้อมูลให้ครบถ้วน"
+  }
 }
 </script>
 
@@ -314,5 +380,11 @@ h1 {
   color: lightgray;
   font-size: 1rem;
   margin-top: .5rem;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 1em;
 }
 </style>

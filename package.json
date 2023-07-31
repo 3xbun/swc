@@ -10,6 +10,7 @@
     "serve": "concurrently \"json-server --watch ./src/database/Orders.json --port 3001\" \"vite\""
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "dayjs": "^1.11.9",
     "json-server": "^0.17.3",
     "vue": "^3.3.4"
