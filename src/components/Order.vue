@@ -229,7 +229,7 @@ const order = () => {
 
   const payload = orderInformation.value
 
-  axios.post("http://localhost:3001/Orders", payload)
+  axios.post("http://localhost:3001/data", payload)
   console.log(payload);
 
 }
