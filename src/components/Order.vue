@@ -229,7 +229,7 @@ const order = () => {
 
   const payload = orderInformation.value
 
-  axios.post("http://localhost:8080/db/data", payload)
+  axios.post("https://seawalkclub.sytes.net/db/data", payload)
   console.log(payload);
 
 }
