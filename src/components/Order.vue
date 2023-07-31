@@ -10,10 +10,9 @@
           <td>Order #</td>
           <td>Std ID</td>
           <td>Name</td>
-
         </thead>
         <tbody>
-          <tr v-for="o in Orders.data">
+          <tr v-for="o in Orders">
             <td>{{ o.orderID }}</td>
             <td>{{ o.orderStdID }}</td>
             <td>{{ o.orderName }}</td>
@@ -152,12 +151,11 @@
 <script setup>
 import dayjs from 'dayjs';
 import axios from 'axios';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-import Orders from '../database/Orders.json';
-
-console.log(typeof Orders.data);
-console.log(Orders.data);
+// const DB_URI = "http://localhost:8080/db/data"
+const DB_URI = "https://seawalkclub.sytes.net/db/data"
+const Orders = ref([])
 
 const page = ref('home');
 const error = ref('');
@@ -229,7 +227,7 @@ const order = () => {
 
   const payload = orderInformation.value
 
-  axios.post("https://seawalkclub.sytes.net/db/data", payload)
+  axios.post(DB_URI, payload)
   console.log(payload);
 
 }
@@ -242,6 +240,12 @@ const formValidation = () => {
     error.value = "กรุณากรอกข้อมูลให้ครบถ้วน"
   }
 }
+
+onMounted(() => {
+  axios.get(DB_URI).then(res => {
+    Orders.value = res.data
+  })
+})
 </script>
 
 <style scoped>
