@@ -50,20 +50,13 @@ const total = ref(0)
 onMounted(() => {
   const route = useRoute()
   axios.get(inject('DB_URI') + "?orderID=" + route.params.orderid).then(data => {
-
     let t = 0
     order.value = data.data[0]
+
     const orders = order.value.orders
     orders.forEach(element => {
       t += 280 * element.amt
     });
-
-    if (order.value != {}) {
-      const orders = order.value.orders
-      orders.forEach(element => {
-        t += 280 * element.amt
-      });
-    }
 
     total.value = t
   })
