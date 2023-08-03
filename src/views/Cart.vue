@@ -97,6 +97,9 @@ const checkout = () => {
   const orderID = "SWC" + dayjs().format("SSS");
   orderInformation.value.orderID = orderID;
   orderInformation.value.orderTime = dayjs().format('MMM DD - HH:mm');
+  const c = orderInformation.value.class.charAt(0)
+
+  c == 'm' ? orderInformation.value.class = orderInformation.value.class.replace('m', 'ม.') : orderInformation.value.class = orderInformation.value.class.replace('p', 'ป.')
 
   const payload = orderInformation.value
 
