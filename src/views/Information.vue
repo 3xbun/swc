@@ -65,8 +65,8 @@ const orderInformation = inject('orderInformation')
 const formValidation = () => {
   const o = orderInformation.value
 
-  // if (o.orderName && o.orderStdID && o.class && o.room && o.number) {
-  if (true) {
+  if (o.orderName && o.orderStdID && o.class && o.room && o.number) {
+    // if (true) {
     router.push('/shop')
   } else {
     error.value = "กรุณากรอกข้อมูลให้ครบถ้วน"
