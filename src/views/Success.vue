@@ -2,15 +2,31 @@
   <div class="container" id="success">
     <h1>
       <i class="fa-solid fa-circle-check"></i>
-      <p>
-        การสั่งจองสำเร็จ
-      </p>
-      <p class="id">Order <span>#{{ order.orderID }}</span></p>
-      <p class="date">{{ order.orderTime }}</p>
-      <p class="alert">** อย่าลืมบันทึกภาพหน้าจอเพื่อเป็นหลักฐานในการรับสินค้า **</p>
+      การสั่งจองสำเร็จ
     </h1>
-
+    <p class="alert">** อย่าลืมบันทึกภาพหน้าจอเพื่อเป็นหลักฐานในการรับสินค้า **</p>
     <div class="contents">
+      <div class="header">
+        <div class="left">
+          <span class="orderID">
+            {{ order.orderID }}
+          </span>
+          <span class="orderName">
+            {{ order.orderName }}
+          </span>
+        </div>
+
+        <p class="orderTime">
+          {{ order.orderTime }}
+        </p>
+      </div>
+      <div class="information">
+        <p><i class="fa-solid fa-user"></i> {{ order.class }}/{{ order.room }} | {{ order.orderStdID }}</p>
+        <p><i class="fa-solid fa-phone"></i> {{ order.number }}</p>
+        <p><i class="fa-brands fa-instagram"></i> {{ order.ig }}</p>
+      </div>
+      <hr>
+      <strong>รายละเอียดการจอง</strong>
       <table>
         <tr v-for="item in order.orders">
           <td class="itemImg"><img :src="item.itemImg"></td>
@@ -19,9 +35,9 @@
           <td>{{ item.amt * 280 }}.-</td>
         </tr>
       </table>
+
       <p class="total">รวมราคา: {{ total }} บาท</p>
     </div>
-
     <div class="footer">
       <p>
         ขอบคุณที่สั่งซื้อกางเกงของเรา และเป็นส่วนหนึ่งในการสนับสนุนเงินบริจาคให้โรงพยาบาลสัตว์ทะเลหายาก จ.ระยอง
@@ -64,7 +80,80 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.fa-circle-check {
+  color: #459843;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+
+.orderName {
+  margin-left: .5em;
+}
+
+.orderID {
+  background-color: var(--white);
+  border-radius: 1em;
+  color: white;
+  font-weight: bold;
+  padding: .25em .5em;
+}
+
+.orderTime {
+  font-style: italic;
+  color: grey;
+}
+
+.information {
+  margin-top: 1em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+hr {
+  border-top: 1px solid var(--white);
+}
+
 img {
+  width: 100%;
+}
+
+.itemImg {
+  width: 20%;
+}
+
+.itemName {
+  padding-left: .5em;
+  text-align: left;
+}
+
+td {
+  text-align: right;
+}
+
+.footer {
+  font-size: 1em;
+  color: gray;
+  text-align: center;
+}
+
+.alert {
+  color: #e5665a;
+  font-size: .8em;
+  margin: 1em 0;
+  text-align: center;
+}
+
+.total {
+  font-weight: bold;
+  text-align: right;
+}
+
+/* img {
   width: 100%;
 }
 
@@ -91,9 +180,9 @@ td {
 
 #success h1 {
   justify-content: center;
-  flex-direction: column;
   gap: 0 !important;
   padding: 1em;
+  align-items: center;
 }
 
 #success .id {
@@ -103,12 +192,6 @@ td {
 
 #success .id span {
   color: var(--white);
-}
-
-.fa-circle-check {
-  color: #459843;
-  font-size: 3.5rem;
-  margin-bottom: 1.5rem;
 }
 
 .date {
@@ -126,5 +209,5 @@ td {
   color: #e5665a;
   font-size: .5em;
   margin-top: 1em;
-}
+} */
 </style>
