@@ -1,5 +1,13 @@
 <template>
   <div class="container" id="cart">
+    <div class="modal" v-if="showModal" @click="showModal = !showModal">
+
+      <i class="fa-solid fa-circle-check"></i>
+      <p>
+        คุณได้เพิ่มสินค้าไปยังรถเข็นแล้ว
+      </p>
+    </div>
+
     <h1>
       <i class="fa-solid fa-circle-chevron-left" @click="router.go(-1)"></i>
       <p>สั่งจองสินค้า</p>
@@ -83,6 +91,7 @@ const products = ref([
   }
 ])
 
+const showModal = ref(false)
 const size = ref('a')
 const amount = ref(1)
 
@@ -132,6 +141,7 @@ const addToCart = () => {
   amount.value = 1
 
   sessionStorage.setItem('sessionCart', JSON.stringify(cart))
+  showModal.value = true
 }
 
 onMounted(() => {
@@ -234,5 +244,31 @@ li {
 .addCart {
   width: 100%;
   margin: .5em 0;
+}
+
+
+.fa-circle-check {
+  color: white;
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal {
+  font-size: 2em;
+  background-color: rgba(109, 136, 170, .7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1em;
+  border-radius: 1em;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 30vh;
+  margin: 0 auto;
+  width: 80%;
+  color: white;
 }
 </style>
