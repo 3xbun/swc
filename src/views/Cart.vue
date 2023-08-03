@@ -18,7 +18,12 @@
           <td>
             <i class="fa-solid fa-plus" @click="cart(item, true)"></i>
           </td>
-          <td>{{ item.amt * 280 }}.-</td>
+          <td class="total" v-if="item.amt < 1" @click="deleteItem(item.itemID)">
+            <p class="btn delete">
+              DELETE
+            </p>
+          </td>
+          <td class="total" v-else>{{ item.amt * 280 }}.-</td>
         </tr>
       </table>
       <p class="total">รวมราคา: {{ total }} บาท</p>
@@ -64,6 +69,17 @@ const cart = (i, isIncrease) => {
     i.amt--
   }
 
+  if (i.amt > 99) {
+    i.amt = 99
+  } else if (i.amt < 0) {
+    i.amt = 0
+  }
+
+  sessionStorage.setItem('sessionCart', JSON.stringify(orderInformation.value.orders))
+}
+
+const deleteItem = (itemID) => {
+  orderInformation.value.orders = orderInformation.value.orders.filter(i => i.itemID !== itemID)
   sessionStorage.setItem('sessionCart', JSON.stringify(orderInformation.value.orders))
 }
 
@@ -91,6 +107,7 @@ const checkout = () => {
       showLoad.value = false
       router.push('success/' + orderID)
     }
+    sessionStorage.clear()
   }).catch(err => {
     error.value = err
     showLoad.value = false
@@ -147,5 +164,21 @@ td {
 .loading {
   width: 20%;
   margin: auto;
+}
+
+.delete {
+  background-color: red;
+  width: fit-content;
+  margin-left: auto;
+}
+
+td.total {
+  text-align: center;
+  width: 15%;
+}
+
+.total {
+  text-align: right;
+  font-weight: bold;
 }
 </style>
