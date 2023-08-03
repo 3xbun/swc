@@ -1,5 +1,6 @@
 <template>
   <div class="container" id="cart">
+    <div class="overlay" v-if="showModal" @click="showModal = !showModal"></div>
     <div class="modal" v-if="showModal" @click="showModal = !showModal">
 
       <i class="fa-solid fa-circle-check"></i>
@@ -263,12 +264,22 @@ li {
   text-align: center;
   padding: 1em;
   border-radius: 1em;
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 30vh;
   margin: 0 auto;
   width: 80%;
   color: white;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
 }
 </style>
