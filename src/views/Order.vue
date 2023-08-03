@@ -67,17 +67,17 @@ const prevRoute = router.options.history.state.back
 const products = ref([
   {
     itemName: "Light Wave",
-    itemImg: "/src/assets/imgs/item1.png",
+    itemImg: "/imgs/item1.png",
     itemPrice: 1
   },
   {
     itemName: "Navy Wave",
-    itemImg: "/src/assets/imgs/item2.png",
+    itemImg: "/imgs/item2.png",
     itemPrice: 1
   },
   {
     itemName: "The School of Fish",
-    itemImg: "/src/assets/imgs/item3.png",
+    itemImg: "/imgs/item3.png",
     itemPrice: 1
   }
 ])
