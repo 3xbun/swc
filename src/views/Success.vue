@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { computed, inject, onMounted, ref } from 'vue';
+import { inject, onMounted, ref } from 'vue';
 import axios from 'axios';
 import { useRoute } from 'vue-router'
 
