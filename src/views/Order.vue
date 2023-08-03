@@ -131,7 +131,6 @@ const addToCart = () => {
 
   amount.value = 1
 
-  console.log(cart);
   sessionStorage.setItem('sessionCart', JSON.stringify(cart))
 }
 
