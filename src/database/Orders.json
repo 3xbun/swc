@@ -1,19 +1,59 @@
 {
   "data": [
     {
-      "orderID": "SWC527",
+      "orderID": "SWC000",
       "orderStdID": 12345,
       "orderName": "3xbun",
-      "orderTime": "Jul 28 - 19:50",
+      "class": "m5",
+      "room": "3",
+      "number": "0999999999",
+      "ig": "3xbun",
+      "orderTime": "Aug 03 - 19:56",
       "orders": [
         {
-          "itemName": "item #2",
-          "itemImg": "https://placehold.co/600x400",
-          "amt": 2,
-          "itemPrice": 1
+          "itemID": "aLW",
+          "itemName": "Light Wave",
+          "itemImg": "/imgs/item1.png",
+          "size": "a",
+          "amt": 1
+        },
+        {
+          "itemID": "aNW",
+          "itemName": "Navy Wave",
+          "itemImg": "/imgs/item2.png",
+          "size": "a",
+          "amt": 1
+        },
+        {
+          "itemID": "aSF",
+          "itemName": "The School of Fish",
+          "itemImg": "/imgs/item3.png",
+          "size": "a",
+          "amt": 1
+        },
+        {
+          "itemID": "kLW",
+          "itemName": "Light Wave",
+          "itemImg": "/imgs/item1.png",
+          "size": "k",
+          "amt": 1
+        },
+        {
+          "itemID": "kNW",
+          "itemName": "Navy Wave",
+          "itemImg": "/imgs/item2.png",
+          "size": "k",
+          "amt": 1
+        },
+        {
+          "itemID": "kSF",
+          "itemName": "The School of Fish",
+          "itemImg": "/imgs/item3.png",
+          "size": "k",
+          "amt": 1
         }
       ],
-      "id": "1O14CmQ"
+      "id": "KEDYzfc"
     }
   ]
 }
