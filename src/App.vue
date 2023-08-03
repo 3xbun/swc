@@ -18,8 +18,8 @@ const orderInformation = ref({
 })
 
 
-const DB_URI = "http://localhost:8080/db/data"
-// const DB_URI = "https://seawalkclub.sytes.net/db/data"
+// const DB_URI = "http://localhost:8080/db/data"
+const DB_URI = "https://seawalkclub.sytes.net/db/data"
 
 provide('DB_URI', DB_URI)
 provide('orderInformation', orderInformation)
