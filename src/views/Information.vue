@@ -12,9 +12,16 @@
           <label for="class">ชั้น*</label>
           <select name="class" v-model="orderInformation.class">
             <option value="no" hidden>เลือกระดับชั้น</option>
-            <option value="kg">อนุบาล 3</option>
-            <option value="p1">ป.1</option>
+            <option value="p3">ป.3</option>
+            <option value="p4">ป.4</option>
+            <option value="p5">ป.5</option>
+            <option value="p6">ป.6</option>
             <option value="m1">ม.1</option>
+            <option value="m2">ม.2</option>
+            <option value="m3">ม.3</option>
+            <option value="m4">ม.4</option>
+            <option value="m5">ม.5</option>
+            <option value="m6">ม.6</option>
           </select>
           <label for="room">ห้อง*</label>
           <select name="room" v-model="orderInformation.room">
