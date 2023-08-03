@@ -11,6 +11,10 @@
   </div>
 </template>
 
+<script setup>
+sessionStorage.clear();
+</script>
+
 <style scoped>
 h1 {
   justify-content: center;

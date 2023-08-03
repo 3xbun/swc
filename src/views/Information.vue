@@ -57,7 +57,7 @@
 
 <script setup>
 import router from '../routes';
-import { inject, ref } from 'vue';
+import { inject, ref, onMounted } from 'vue';
 
 const error = ref('');
 const orderInformation = inject('orderInformation')
@@ -65,13 +65,21 @@ const orderInformation = inject('orderInformation')
 const formValidation = () => {
   const o = orderInformation.value
 
-  if (o.orderName && o.orderStdID && o.class && o.room && o.number) {
+  if (o.orderName && o.orderStdID && o.class != 'no' && o.room != 'no' && o.number) {
     // if (true) {
+    sessionStorage.setItem("orderInformation", JSON.stringify(orderInformation.value));
     router.push('/shop')
   } else {
     error.value = "กรุณากรอกข้อมูลให้ครบถ้วน"
   }
 }
+
+onMounted(() => {
+  const session = sessionStorage.getItem("orderInformation")
+  if (session) {
+    orderInformation.value = JSON.parse(session)
+  }
+})
 </script>
 
 <style scoped>

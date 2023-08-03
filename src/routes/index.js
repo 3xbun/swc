@@ -5,6 +5,7 @@ import Order from '../views/Order.vue';
 import Information from '../views/Information.vue';
 import Cart from '../views/Cart.vue';
 import Success from '../views/Success.vue';
+import Admin from '../views/Admin.vue';
 
 // 2. Define some routes
 // Each route should map to a component.
@@ -14,7 +15,8 @@ const routes = [
   { path: '/information', component: Information },
   { path: '/shop', component: Order },
   { path: '/cart', component: Cart },
-  { path: '/success', component: Success },
+  { path: '/success/:orderid', name: 'success', component: Success },
+  { path: '/admin', component: Admin },
 ]
 
 // 3. Create the router instance and pass the `routes` option

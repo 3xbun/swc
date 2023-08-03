@@ -5,14 +5,14 @@
       <p>
         การสั่งจองสำเร็จ
       </p>
-      <p class="id">Order <span>#{{ orderInformation.orderID }}</span></p>
-      <p class="date">{{ orderInformation.orderTime }}</p>
+      <p class="id">Order <span>#{{ order.orderID }}</span></p>
+      <p class="date">{{ order.orderTime }}</p>
       <p class="alert">** อย่าลืมบันทึกภาพหน้าจอเพื่อเป็นหลักฐานในการรับสินค้า **</p>
     </h1>
 
     <div class="contents">
       <table>
-        <tr v-for="item in orderInformation.orders">
+        <tr v-for="item in order.orders">
           <td class="itemImg"><img :src="item.itemImg"></td>
           <td class="itemName">{{ item.itemName }} <br> <span class="grey">({{ size(item) }})</span></td>
           <td>x{{ item.amt }}</td>
@@ -31,12 +31,13 @@
 </template>
 
 <script setup>
-import { computed, inject } from 'vue';
+import { computed, inject, onMounted, ref } from 'vue';
+import axios from 'axios';
+import { useRoute } from 'vue-router'
 
-const orderInformation = inject('orderInformation')
+const order = ref({})
 
 const size = (i) => {
-  console.log(i);
   if (i.itemID.charAt(0) == 'k') {
     return "Kid Size"
   } else {
@@ -44,14 +45,28 @@ const size = (i) => {
   }
 }
 
-const total = computed(() => {
-  let t = 0
-  const orders = orderInformation.value.orders
-  orders.forEach(element => {
-    t += 280 * element.amt
-  });
+const total = ref(0)
 
-  return t
+onMounted(() => {
+  const route = useRoute()
+  axios.get(inject('DB_URI') + "?orderID=" + route.params.orderid).then(data => {
+
+    let t = 0
+    order.value = data.data[0]
+    const orders = order.value.orders
+    orders.forEach(element => {
+      t += 280 * element.amt
+    });
+
+    if (order.value != {}) {
+      const orders = order.value.orders
+      orders.forEach(element => {
+        t += 280 * element.amt
+      });
+    }
+
+    total.value = t
+  })
 })
 </script>
 

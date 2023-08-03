@@ -62,23 +62,24 @@
 import { inject, onMounted, ref } from 'vue';
 import router from '../routes';
 
-const prevRoute = router.options.history.state.back
-
 const products = ref([
   {
     itemName: "Light Wave",
     itemImg: "/imgs/item1.png",
-    itemPrice: 1
+    itemPrice: 1,
+    itemID: "LW"
   },
   {
     itemName: "Navy Wave",
     itemImg: "/imgs/item2.png",
-    itemPrice: 1
+    itemPrice: 1,
+    itemID: "NW"
   },
   {
     itemName: "The School of Fish",
     itemImg: "/imgs/item3.png",
-    itemPrice: 1
+    itemPrice: 1,
+    itemID: "SF"
   }
 ])
 
@@ -103,11 +104,12 @@ const addAmt = (increase) => {
   }
 }
 
+const orderInformation = inject('orderInformation')
 const cart = inject('orderInformation').value.orders
 
 const addToCart = () => {
   const product = {
-    itemID: size.value + selectedProduct.value.itemName.slice(-1),
+    itemID: size.value + selectedProduct.value.itemID,
     itemName: selectedProduct.value.itemName,
     itemImg: selectedProduct.value.itemImg,
     size: size.value,
@@ -128,9 +130,24 @@ const addToCart = () => {
   }
 
   amount.value = 1
+
+  console.log(cart);
+  sessionStorage.setItem('sessionCart', JSON.stringify(cart))
 }
 
 onMounted(() => {
+  const prevRoute = router.options.history.state.back
+  const sessionCart = sessionStorage.getItem("sessionCart")
+  const session = sessionStorage.getItem("orderInformation")
+
+  if (session) {
+    orderInformation.value = JSON.parse(session)
+  }
+
+  if (sessionCart) {
+    orderInformation.value.orders = JSON.parse(sessionCart)
+  }
+
   if (prevRoute !== '/information') {
     router.push('/information')
   }

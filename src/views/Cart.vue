@@ -29,6 +29,9 @@
       <p class="error">
         {{ error }}
       </p>
+      <div class="loading" v-if="showLoad">
+        <img src="https://cdn.dribbble.com/users/359314/screenshots/2379673/untitled-3.gif" alt="">
+      </div>
     </div>
   </div>
 </template>
@@ -36,18 +39,17 @@
 <script setup>
 import dayjs from 'dayjs';
 import axios from 'axios';
-import { computed, inject, ref } from 'vue';
+import { computed, inject, ref, onMounted } from 'vue';
 import router from '../routes';
 
-// const DB_URI = "http://localhost:8080/db/data"
-const DB_URI = "https://seawalkclub.sytes.net/db/data"
+const DB_URI = inject('DB_URI')
 
 const orderInformation = inject('orderInformation')
 
 const error = ref('')
+const showLoad = ref(false)
 
 const size = (i) => {
-  console.log(i);
   if (i.itemID.charAt(0) == 'k') {
     return "Kid Size"
   } else {
@@ -61,6 +63,8 @@ const cart = (i, isIncrease) => {
   } else {
     i.amt--
   }
+
+  sessionStorage.setItem('sessionCart', JSON.stringify(orderInformation.value.orders))
 }
 
 const total = computed(() => {
@@ -74,18 +78,42 @@ const total = computed(() => {
 })
 
 const checkout = () => {
-  orderInformation.value.orderID = "SWC" + dayjs().format("SSS");
+  const orderID = "SWC" + dayjs().format("SSS");
+  orderInformation.value.orderID = orderID;
   orderInformation.value.orderTime = dayjs().format('MMM DD - HH:mm');
 
   const payload = orderInformation.value
 
-  axios.post(DB_URI, payload).catch(err => {
+  showLoad.value = true
+  axios.post(DB_URI, payload).then(data => {
+    console.log(data);
+    if (data) {
+      showLoad.value = false
+      router.push('success/' + orderID)
+    }
+  }).catch(err => {
     error.value = err
-    console.log(err);
+    showLoad.value = false
   })
-
-  router.push('success')
 }
+
+onMounted(() => {
+  const prevRoute = router.options.history.state.back
+  const sessionCart = sessionStorage.getItem("sessionCart")
+  const session = sessionStorage.getItem("orderInformation")
+
+  if (session) {
+    orderInformation.value = JSON.parse(session)
+  }
+
+  if (sessionCart) {
+    orderInformation.value.orders = JSON.parse(sessionCart)
+  }
+
+  if (prevRoute !== '/shop') {
+    router.push('/information')
+  }
+})
 </script>
 
 <style scoped>
@@ -114,5 +142,10 @@ td {
   color: red;
   text-align: center;
   margin-top: 1em;
+}
+
+.loading {
+  width: 20%;
+  margin: auto;
 }
 </style>
