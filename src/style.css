@@ -18,6 +18,7 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 * {
@@ -32,13 +33,58 @@ body {
   color: var(--white);
 }
 
+hr {
+  margin: 1em 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .container {
   width: 85vw;
   margin: 1em auto;
   max-width: 800px;
 }
 
+.contents,
+h1 {
+  background-color: white;
+  padding: .5rem 1rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
 
-hr {
-  margin: 1em 0;
+h1 {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+}
+
+i {
+  cursor: pointer;
+  font-size: .8em;
+}
+
+li {
+  list-style: none;
+}
+
+.btn {
+  margin-top: 2em;
+  text-decoration: none;
+  color: white;
+  background-color: var(--white);
+  width: 50%;
+  margin: 2em auto;
+  padding: 1em;
+  border-radius: 1em;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+.shadow {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }

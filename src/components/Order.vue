@@ -24,6 +24,7 @@
 
   <div v-else>
     <div class="container" id="home" v-if="page == 'home'">
+      <img class="logo" src="../assets/imgs/logo.png">
       <h1>Welcome to Order</h1>
       <div class="btn" @click="page = 'order'">สั่งซื้อ</div>
     </div>
@@ -172,19 +173,19 @@ const total = computed(() => {
 const items = ref([
   {
     itemName: "item #1",
-    itemImg: "https://placehold.co/600x400",
+    itemImg: "@/assets/imgs/item1.png",
     amt: 0,
     itemPrice: 1
   },
   {
     itemName: "item #2",
-    itemImg: "https://placehold.co/600x400",
+    itemImg: "@/assets/imgs/item1.png",
     amt: 0,
     itemPrice: 1
   },
   {
     itemName: "item #3",
-    itemImg: "https://placehold.co/600x400",
+    itemImg: "@/assets/imgs/item1.png",
     amt: 0,
     itemPrice: 1
   }
@@ -229,7 +230,6 @@ const order = () => {
 
   axios.post(DB_URI, payload)
   console.log(payload);
-
 }
 
 const formValidation = () => {
@@ -277,35 +277,6 @@ td {
 td:last-child {
   font-weight: bold;
   padding-left: 1em;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  margin-top: 2em;
-}
-
-input {
-  border: none;
-  font-family: inherit;
-  padding: .5em 1em;
-  border-radius: .5em;
-  background-color: var(--dark);
-}
-
-.btn {
-  margin-top: 2em;
-  text-decoration: none;
-  color: white;
-  background-color: var(--white);
-  width: 50%;
-  margin: 2em auto;
-  padding: 1em;
-  border-radius: 1em;
-  font-weight: bold;
-  text-align: center;
-  cursor: pointer;
 }
 
 i {
